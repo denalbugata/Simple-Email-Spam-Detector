@@ -73,6 +73,47 @@ print("Recall:", rec)
 print("F1 Score:", f1)
 ```
 
+<b>The final result should look like this:</b>
+```python
+pip install pandas
+pip install nltk
+pip install sklearn
 
+import pandas as pd
+import nltk
+from nltk.tokenize import word_tokenize
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import CountVectorizer
+
+data = pd.read_csv('emails.csv')
+
+# Tokenize the email text
+data['email'] = data['email'].apply(word_tokenize)
+
+# Create bag of words representation
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(data['email'])
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, data['label'], test_size=0.2)
+
+clf = MultinomialNB()
+clf.fit(X_train, y_train)
+
+y_pred = clf.predict(X_test)
+
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+acc = accuracy_score(y_test, y_pred)
+prec = precision_score(y_test, y_pred, pos_label='spam')
+rec = recall_score(y_test, y_pred, pos_label='spam')
+f1 = f1_score(y_test, y_pred, pos_label='spam')
+
+print("Accuracy:", acc)
+print("Precision:", prec)
+print("Recall:", rec)
+print("F1 Score:", f1)
+
+```
 
 
