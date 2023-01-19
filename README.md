@@ -16,51 +16,50 @@ Project consists of a simple PowerShell script that walks the user through "zero
 - <b>Jupyter Notebook</b>
 
 <h2>Program code walk-through:</h2>
+
+<b>Step 1: Install necessary libraries and modules:</b>
 ```python
-
-##Step 1: Install necessary libraries and modules.
-
 pip install pandas
 pip install nltk
 pip install sklearn
-
-Step 2: Import the necessary libraries and modules in your project.
-
+```
+<b>Step 1: Install necessary libraries and modules:</b>
+```python
 import pandas as pd
 import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
-Step 3: Load the dataset of emails, where the dataset is labeled as spam or ham.
-
-Copy code
+```
+<b>Step 3: Load the dataset of emails, where the dataset is labeled as spam or ham:</b>
+```python
 data = pd.read_csv('emails.csv')
-Step 4: Prepare the data for modeling. This includes tokenizing the email text and creating a bag of words representation.
-
-Copy code
+```
+<b>Step 4: Prepare the data for modeling. This includes tokenizing the email text and creating a bag of words representation:</b>
+```python 
 # Tokenize the email text
 data['email'] = data['email'].apply(word_tokenize)
 
 # Create bag of words representation
 vectorizer = CountVectorizer()
 X = vectorizer.fit_transform(data['email'])
-Step 5: Split the data into training and testing sets.
-
-
+```
+<b>Step 5: Split the data into training and testing sets:</b>
+```python
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, data['label'], test_size=0.2)
-Step 6: Train a Naive Bayes classifier on the training data.
-
-Copy code
+```
+<b>Step 6: Train a Naive Bayes classifier on the training data:</b>
+```python 
 clf = MultinomialNB()
 clf.fit(X_train, y_train)
-Step 7: Test the classifier on the testing data.
-
-Copy code
+```
+<b>Step 7: Test the classifier on the testing data:</b>
+```python
 y_pred = clf.predict(X_test)
-Step 8: Evaluate the performance of the classifier using metrics such as accuracy, precision, recall and f1-score
-
-Copy code
+```
+<b>Step 8: Evaluate the performance of the classifier using metrics such as accuracy, precision, recall and f1-score</b>
+```python 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 acc = accuracy_score(y_test, y_pred)
@@ -73,3 +72,7 @@ print("Precision:", prec)
 print("Recall:", rec)
 print("F1 Score:", f1)
 ```
+
+
+
+
